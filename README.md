@@ -1,12 +1,37 @@
-# React + Vite
+# Zenith-X Flight Test & Evaluation Center
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This is my NSS Capstone project.  
+It is a **React-based web application** that streamlines defense flight test scheduling and system coordination.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Customers will be able to:
 
-## Expanding the ESLint configuration
+- Create and manage test requests
+- View and edit requests in draft status
+- Browse available test ranges and systems
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Employees will be able to:
+
+- See all requests
+- Approve or reject requests
+
+Admins will be able to:
+
+- Manage users (add, delete)
+
+## Tech Stack
+
+- React (Vite)
+- React Router
+- JSON Server (API)
+- CSS (for styling)
+- Git & GitHub (version control)
+
+## Database (Mock with JSON Server)
+
+- Users
+- Ranges
+- Systems
+- Requests
+- Request_Systems (junction table for many-to-many)
