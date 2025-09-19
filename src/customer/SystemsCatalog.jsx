@@ -1,3 +1,4 @@
+// src/customer/SystemsCatalog.jsx
 import { useState, useEffect } from "react"
 import { getSystems } from "../services/systemsService.jsx"
 
@@ -22,7 +23,7 @@ export const SystemsCatalog = () => {
           </tr>
         </thead>
         <tbody>
-          {systems.map(s => (
+          {systems.map((s) => (
             <tr key={s.id}>
               <td>{s.code}</td>
               <td>{s.name}</td>

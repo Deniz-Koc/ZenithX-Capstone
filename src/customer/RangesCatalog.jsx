@@ -1,3 +1,4 @@
+// src/customer/RangesCatalog.jsx
 import { useState, useEffect } from "react"
 import { getRanges } from "../services/rangesService.jsx"
 
@@ -10,7 +11,7 @@ export const RangesCatalog = () => {
 
   return (
     <div>
-      <h1>Test Range Catalog</h1>
+      <h1>Test Ranges Catalog</h1>
 
       <table border="1">
         <thead>
@@ -22,7 +23,7 @@ export const RangesCatalog = () => {
           </tr>
         </thead>
         <tbody>
-          {ranges.map(r => (
+          {ranges.map((r) => (
             <tr key={r.id}>
               <td>{r.name}</td>
               <td>{r.location}</td>
