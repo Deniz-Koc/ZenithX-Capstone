@@ -7,16 +7,23 @@ import { RequestDetail } from "./customer/RequestDetail.jsx"
 import { RangesCatalog } from "./customer/RangesCatalog.jsx"
 import { SystemsCatalog } from "./customer/SystemsCatalog.jsx"
 import { Profile } from "./customer/Profile.jsx"
+import { Logout } from "./customer/Logout.jsx"
+import { Login } from "./customer/Login.jsx"
+import { Home } from "./customer/Home.jsx"
 
 export const App = () => {
   return (
     <Routes>
+      {/* Login route en üstte */}
+      <Route path="/login" element={<Login />} />
+
+      {/* Diğer tüm rotalar NavBar + Outlet içinde */}
       <Route
         path="/"
         element={
           <>
             <NavBar />
-            <Outlet /> 
+            <Outlet />
           </>
         }
       >
@@ -31,6 +38,12 @@ export const App = () => {
 
         {/* Profile */}
         <Route path="profile" element={<Profile />} />
+
+        {/* Logout */}
+        <Route path="logout" element={<Logout />} />
+
+        {/*Home*/}
+        <Route index element={<Home />} />
       </Route>
     </Routes>
   )

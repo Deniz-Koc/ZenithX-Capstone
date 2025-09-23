@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from "react-router-dom"
-import { useEffect, useState } from "react"
+import { useState, useEffect } from "react"
+import "./RequestDetail.css"
 
 export const RequestDetail = () => {
   const { requestId } = useParams()
@@ -8,43 +9,37 @@ export const RequestDetail = () => {
 
   useEffect(() => {
     fetch(`http://localhost:8088/requests/${requestId}?_expand=user&_expand=range`)
-      .then(res => res.json())
-      .then(data => setRequest(data))
+      .then((res) => res.json())
+      .then((data) => setRequest(data))
   }, [requestId])
 
   const handleDelete = () => {
-    fetch(`http://localhost:8088/requests/${requestId}`, { method: "DELETE" })
-      .then(() => navigate("/requests"))
+    fetch(`http://localhost:8088/requests/${requestId}`, {
+      method: "DELETE"
+    }).then(() => {
+      navigate("/requests")
+    })
   }
 
-  if (!request) return <p>Loading...</p>
+  const handleEdit = () => {
+    alert("Edit feature will be implemented soon!")
+  }
+
+  if (!request) {
+    return <p>Loading...</p>
+  }
 
   return (
-    <div>
-      <h1>View Request (Customer)</h1>
+    <div className="request-detail">
+      <h1>Request Detail</h1>
+      <p><strong>ID:</strong> {request.id}</p>
+      <p><strong>User:</strong> {request.user?.name}</p>
+      <p><strong>Range:</strong> {request.range?.name}</p>
+      <p><strong>Date:</strong> {request.primary_date}</p>
+      <p><strong>Status:</strong> {request.status}</p>
 
-      <div>
-        <label>Test Range:</label>
-        <span> {request.range?.name}</span>
-      </div>
-
-      <div>
-        <label>Primary Date:</label>
-        <span> {request.primary_date}</span>
-      </div>
-
-      <div>
-        <label>Status:</label>
-        <span> {request.status}</span>
-      </div>
-
-      <div>
-        <label>User:</label>
-        <span> {request.user?.name}</span>
-      </div>
-
-      <div style={{ marginTop: "1rem" }}>
-        <button onClick={() => navigate(`/requests/${requestId}/edit`)}>Edit</button>
+      <div className="request-actions">
+        <button onClick={handleEdit}>Edit</button>
         <button onClick={handleDelete}>Delete</button>
         <button onClick={() => navigate("/requests")}>Back</button>
       </div>
