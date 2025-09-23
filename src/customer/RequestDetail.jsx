@@ -14,15 +14,25 @@ export const RequestDetail = () => {
   }, [requestId])
 
   const handleDelete = () => {
-    fetch(`http://localhost:8088/requests/${requestId}`, {
-      method: "DELETE"
-    }).then(() => {
-      navigate("/requests")
-    })
-  }
-
-  const handleEdit = () => {
-    alert("Edit feature will be implemented soon!")
+    // Önce bu request’e bağlı sistem kayıtlarını sil
+    fetch(`http://localhost:8088/request_systems?request_id=${requestId}`)
+      .then(res => res.json())
+      .then(systemLinks => {
+        const deletes = systemLinks.map(link =>
+          fetch(`http://localhost:8088/request_systems/${link.id}`, { method: "DELETE" })
+        )
+        return Promise.all(deletes)
+      })
+      .then(() => {
+        // Sonra request’in kendisini sil
+        return fetch(`http://localhost:8088/requests/${requestId}`, {
+          method: "DELETE"
+        })
+      })
+      .then(() => {
+        alert("Request deleted successfully!")
+        navigate("/requests")
+      })
   }
 
   if (!request) {
@@ -39,7 +49,6 @@ export const RequestDetail = () => {
       <p><strong>Status:</strong> {request.status}</p>
 
       <div className="request-actions">
-        <button onClick={handleEdit}>Edit</button>
         <button onClick={handleDelete}>Delete</button>
         <button onClick={() => navigate("/requests")}>Back</button>
       </div>
