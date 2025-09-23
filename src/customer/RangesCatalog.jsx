@@ -1,6 +1,6 @@
-// src/customer/RangesCatalog.jsx
 import { useState, useEffect } from "react"
 import { getRanges } from "../services/rangesService.jsx"
+import "./Catalog.css" 
 
 export const RangesCatalog = () => {
   const [ranges, setRanges] = useState([])
@@ -10,10 +10,10 @@ export const RangesCatalog = () => {
   }, [])
 
   return (
-    <div>
+    <div className="catalog-container">
       <h1>Test Ranges Catalog</h1>
 
-      <table border="1">
+      <table className="catalog-table">
         <thead>
           <tr>
             <th>Name</th>

@@ -1,0 +1,26 @@
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.profile-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.profile-table {
+  border-collapse: collapse;
+  width: 400px;
+  font-size: 1.1rem;
+}
+
+.profile-table th,
+.profile-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}

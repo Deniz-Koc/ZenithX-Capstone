@@ -1,22 +1,17 @@
 import { useNavigate } from "react-router-dom"
+import "./Log.css"
 
 export const Logout = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    // Şimdilik sadece iskelet
-    console.log("User logged out")
+    localStorage.removeItem("zenithx_user")
     alert("You have been logged out")
-    
-    // İlerde burada localStorage temizleme yapılır
-    // localStorage.removeItem("user")
-    
-    // Login sayfasına yönlendirme
     navigate("/login")
   }
 
   return (
-    <div>
+    <div className="log-container">
       <h1>Logout</h1>
       <button onClick={handleLogout}>Confirm Logout</button>
     </div>
