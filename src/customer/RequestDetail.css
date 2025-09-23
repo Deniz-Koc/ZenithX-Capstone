@@ -1,0 +1,15 @@
+.request-detail {
+  padding: 1rem;
+}
+
+.request-detail p {
+  margin: 0.5rem 0;
+}
+
+.request-actions {
+  margin-top: 20px;
+}
+
+.request-actions button {
+  margin-right: 10px;
+}
