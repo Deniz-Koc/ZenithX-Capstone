@@ -1,116 +1,115 @@
 import { useState, useEffect } from "react"
 import { getRanges } from "../services/rangesService.jsx"
 import { getSystems } from "../services/systemsService.jsx"
+import "./NewRequest.css"
 
 export const NewRequest = () => {
   const [ranges, setRanges] = useState([])
   const [systems, setSystems] = useState([])
   const [date, setDate] = useState("")
-  const [selectedRange, setSelectedRange] = useState("")
+  const [rangeId, setRangeId] = useState("")
   const [selectedSystems, setSelectedSystems] = useState([])
 
+  const localUser = JSON.parse(localStorage.getItem("zenithx_user"))
+
   useEffect(() => {
-    getRanges().then(setRanges)
+    getRanges().then(data => setRanges(data))
   }, [])
 
   useEffect(() => {
-    getSystems().then(setSystems)
+    getSystems().then(data => setSystems(data))
   }, [])
+
+  const handleSystemChange = (e) => {
+    const value = parseInt(e.target.value)
+    if (e.target.checked) {
+      setSelectedSystems([...selectedSystems, value])
+    } else {
+      setSelectedSystems(selectedSystems.filter(id => id !== value))
+    }
+  }
 
   const handleSave = (e) => {
     e.preventDefault()
 
-    // Yeni request objesi
+    if (!localUser) {
+      alert("You must be logged in!")
+      return
+    }
+
     const newRequest = {
-      userId: 1,   // şimdilik sabit
-      rangeId: parseInt(selectedRange),
+      userId: parseInt(localUser.id),
+      rangeId: parseInt(rangeId),
       primary_date: date,
       status: "draft"
     }
 
-    // Önce requests tablosuna POST
     fetch("http://localhost:8088/requests", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newRequest)
     })
       .then(res => res.json())
-      .then((createdRequest) => {
-        // Sonra seçilen sistemleri request_systems tablosuna kaydet
+      .then(created => {
         selectedSystems.forEach(sysId => {
           fetch("http://localhost:8088/request_systems", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              request_id: createdRequest.id,
-              system_id: sysId
+              requestId: created.id,
+              systemId: sysId
             })
           })
         })
-
-        alert("Request saved successfully!")
+        alert("New request created!")
       })
   }
 
   return (
-    <div>
-      <h1>New Test Request</h1>
+    <div className="new-request-page">
+      <div className="new-request-container">
+        <h1>New Test Request (Customer)</h1>
+        <form onSubmit={handleSave} className="new-request-form">
+          <div className="form-row">
+            <label>Test Range:</label>
+            <select value={rangeId} onChange={(e) => setRangeId(e.target.value)}>
+              <option value="">Select a Test Range</option>
+              {ranges.map(r => (
+                <option key={r.id} value={r.id}>{r.name}</option>
+              ))}
+            </select>
+          </div>
 
-      <form onSubmit={handleSave}>
-        {/* Range seçimi */}
-        <div>
-          <label>Test Range:</label>
-          <select 
-            value={selectedRange} 
-            onChange={(e) => setSelectedRange(e.target.value)}
-            required
-          >
-            <option value="">Select a Test Range</option>
-            {ranges.map(r => (
-              <option key={r.id} value={r.id}>{r.name}</option>
-            ))}
-          </select>
-        </div>
+          <div className="form-row">
+            <label>Primary Date:</label>
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </div>
 
-        {/* Tarih seçimi */}
-        <div>
-          <label>Primary Date:</label>
-          <input 
-            type="date" 
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </div>
-
-        {/* Sistem seçimi */}
-        <div>
-          <label>Test Systems:</label>
-          {systems.map(s => (
-            <div key={s.id}>
-              <label>
-                <input 
-                  type="checkbox"
-                  value={s.id}
-                  onChange={(e) => {
-                    if (e.target.checked) {
-                      setSelectedSystems([...selectedSystems, parseInt(e.target.value)])
-                    } else {
-                      setSelectedSystems(selectedSystems.filter(id => id !== parseInt(e.target.value)))
-                    }
-                  }}
-                />
-                {s.name}
-              </label>
+          <div className="systems-section">
+            <label>Test Systems:</label>
+            <div className="systems-options">
+              {systems.map(s => (
+                <label key={s.id}>
+                  <input
+                    type="checkbox"
+                    value={s.id}
+                    onChange={handleSystemChange}
+                  />
+                  {s.name}
+                </label>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
 
-        {/* Save */}
-        <div>
-          <button type="submit">Save</button>
-        </div>
-      </form>
+          <div className="form-actions">
+            <button type="submit" className="save-btn">Save</button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }

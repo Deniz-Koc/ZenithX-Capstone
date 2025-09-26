@@ -1,0 +1,30 @@
+.catalog-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  text-align: center;
+}
+
+.catalog-container h1 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.catalog-table {
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.catalog-table th,
+.catalog-table td {
+  border: 1px solid #ddd;
+  padding: 12px;
+  text-align: center;
+}
+
+.catalog-table th {
+  background-color: #f5f5f5;
+  font-weight: bold;
+}

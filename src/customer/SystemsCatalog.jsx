@@ -1,6 +1,6 @@
-// src/customer/SystemsCatalog.jsx
 import { useState, useEffect } from "react"
 import { getSystems } from "../services/systemsService.jsx"
+import "../customer/Catalog.css"
 
 export const SystemsCatalog = () => {
   const [systems, setSystems] = useState([])
@@ -10,10 +10,9 @@ export const SystemsCatalog = () => {
   }, [])
 
   return (
-    <div>
+    <div className="catalog-container">
       <h1>Test Systems Catalog</h1>
-
-      <table border="1">
+      <table className="catalog-table">
         <thead>
           <tr>
             <th>Code</th>
@@ -28,7 +27,7 @@ export const SystemsCatalog = () => {
               <td>{s.code}</td>
               <td>{s.name}</td>
               <td>{s.type}</td>
-              <td>{s.key_specs}</td>
+              <td>{s.key_specs}</td> 
             </tr>
           ))}
         </tbody>

@@ -1,0 +1,83 @@
+.new-request-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+}
+
+.new-request-container {
+  background: #fff;
+  border: 1px solid #ccc;
+  padding: 30px 40px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  width: 750px;
+}
+
+.new-request-container h1 {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.form-row label {
+  flex: 0 0 150px;
+  background: #e6e6e6;
+  padding: 8px;
+  margin-right: 20px;
+  text-align: right;
+  font-weight: bold;
+  border-radius: 3px;
+}
+
+.form-row select,
+.form-row input {
+  flex: 1;
+  padding: 8px;
+}
+
+.systems-section {
+  margin: 30px 0;
+}
+
+.systems-section > label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.systems-options {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.cancel-btn {
+  background: #ccc;
+  color: #000;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.save-btn {
+  background: #1a2b3c;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+}

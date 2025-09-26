@@ -1,10 +1,10 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
+import "./Log.css"
 
 export const Login = () => {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [error, setError] = useState("")
   const navigate = useNavigate()
 
   const handleLogin = (e) => {
@@ -14,19 +14,16 @@ export const Login = () => {
       .then(res => res.json())
       .then(users => {
         if (users.length === 1) {
-          // giriş başarılı
           localStorage.setItem("zenithx_user", JSON.stringify(users[0]))
-          navigate("/requests") // giriş sonrası yönlendirilecek sayfa
-        } else {
-          setError("Invalid email or password")
+          navigate("/requests")
         }
       })
   }
 
   return (
-    <div>
+    <div className="log-container">
       <h1>Login</h1>
-      <form onSubmit={handleLogin}>
+      <form onSubmit={handleLogin} className="log-form">
         <div>
           <label>Email:</label>
           <input 
@@ -49,8 +46,6 @@ export const Login = () => {
 
         <button type="submit">Login</button>
       </form>
-
-      {error && <p style={{color: "red"}}>{error}</p>}
     </div>
   )
 }

@@ -14,10 +14,10 @@ import { Home } from "./customer/Home.jsx"
 export const App = () => {
   return (
     <Routes>
-      {/* Login route en üstte */}
+      {/* Login route */}
       <Route path="/login" element={<Login />} />
 
-      {/* Diğer tüm rotalar NavBar + Outlet içinde */}
+      {/* Other Routes*/}
       <Route
         path="/"
         element={

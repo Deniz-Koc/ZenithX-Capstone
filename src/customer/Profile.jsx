@@ -1,24 +1,26 @@
-// src/customer/Profile.jsx
 import { useEffect, useState } from "react"
+import "./Profile.css"
 
 export const Profile = () => {
   const [user, setUser] = useState(null)
+  const localUser = JSON.parse(localStorage.getItem("zenithx_user"))
 
   useEffect(() => {
-    // Şimdilik 1 numaralı kullanıcıyı (Ava Carter) çekiyoruz
-    fetch("http://localhost:8088/users/1")
-      .then(res => res.json())
-      .then(data => setUser(data))
-  }, [])
+    if (localUser) {
+      fetch(`http://localhost:8088/users/${localUser.id}`)
+        .then(res => res.json())
+        .then(data => setUser(data))
+    }
+  }, [localUser?.id])
 
   if (!user) {
     return <p>Loading profile...</p>
   }
 
   return (
-    <div>
+    <div className="profile-container">
       <h1>My Profile</h1>
-      <table border="1">
+      <table>
         <tbody>
           <tr>
             <th>Name</th>
@@ -38,6 +40,7 @@ export const Profile = () => {
           </tr>
         </tbody>
       </table>
+      <button>Edit Profile</button>
     </div>
   )
 }
