@@ -13,7 +13,9 @@ export const Logout = () => {
   return (
     <div className="log-container">
       <h1>Logout</h1>
-      <button onClick={handleLogout}>Confirm Logout</button>
+      <button onClick={handleLogout} className="log-btn">
+        Confirm Logout
+      </button>
     </div>
   )
 }

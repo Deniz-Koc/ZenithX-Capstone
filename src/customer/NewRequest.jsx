@@ -10,12 +10,14 @@ export const NewRequest = () => {
   const [rangeId, setRangeId] = useState("")
   const [selectedSystems, setSelectedSystems] = useState([])
 
+  const localUser = JSON.parse(localStorage.getItem("zenithx_user"))
+
   useEffect(() => {
-    getRanges().then((data) => setRanges(data))
+    getRanges().then(data => setRanges(data))
   }, [])
 
   useEffect(() => {
-    getSystems().then((data) => setSystems(data))
+    getSystems().then(data => setSystems(data))
   }, [])
 
   const handleSystemChange = (e) => {
@@ -23,15 +25,20 @@ export const NewRequest = () => {
     if (e.target.checked) {
       setSelectedSystems([...selectedSystems, value])
     } else {
-      setSelectedSystems(selectedSystems.filter((id) => id !== value))
+      setSelectedSystems(selectedSystems.filter(id => id !== value))
     }
   }
 
   const handleSave = (e) => {
     e.preventDefault()
 
+    if (!localUser) {
+      alert("You must be logged in!")
+      return
+    }
+
     const newRequest = {
-      userId: 1,   
+      userId: parseInt(localUser.id),
       rangeId: parseInt(rangeId),
       primary_date: date,
       status: "draft"
@@ -49,8 +56,8 @@ export const NewRequest = () => {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-              request_id: created.id,
-              system_id: sysId
+              requestId: created.id,
+              systemId: sysId
             })
           })
         })
@@ -58,18 +65,12 @@ export const NewRequest = () => {
       })
   }
 
-  const handleCancel = () => {
-    alert("Form cancelled")
-  }
-
   return (
     <div className="new-request-page">
       <div className="new-request-container">
         <h1>New Test Request (Customer)</h1>
-
         <form onSubmit={handleSave} className="new-request-form">
-          {/* Test Range */}
-          <div>
+          <div className="form-row">
             <label>Test Range:</label>
             <select value={rangeId} onChange={(e) => setRangeId(e.target.value)}>
               <option value="">Select a Test Range</option>
@@ -79,36 +80,32 @@ export const NewRequest = () => {
             </select>
           </div>
 
-          {/* Primary Date */}
-          <div>
+          <div className="form-row">
             <label>Primary Date:</label>
-            <input 
-              type="date" 
-              value={date} 
-              onChange={(e) => setDate(e.target.value)} 
+            <input
+              type="date"
+              value={date}
+              onChange={(e) => setDate(e.target.value)}
             />
           </div>
 
-          {/* Test Systems */}
           <div className="systems-section">
             <label>Test Systems:</label>
             <div className="systems-options">
               {systems.map(s => (
                 <label key={s.id}>
-                  <input 
-                    type="checkbox" 
-                    value={s.id} 
+                  <input
+                    type="checkbox"
+                    value={s.id}
                     onChange={handleSystemChange}
-                  /> 
+                  />
                   {s.name}
                 </label>
               ))}
             </div>
           </div>
 
-          {/* Save / Cancel */}
           <div className="form-actions">
-            <button type="button" className="cancel-btn" onClick={handleCancel}>Cancel</button>
             <button type="submit" className="save-btn">Save</button>
           </div>
         </form>

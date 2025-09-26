@@ -6,11 +6,16 @@ export const RequestDetail = () => {
   const { requestId } = useParams()
   const navigate = useNavigate()
   const [request, setRequest] = useState(null)
+  const [systems, setSystems] = useState([])
 
   useEffect(() => {
     fetch(`http://localhost:8088/requests/${requestId}?_expand=user&_expand=range`)
-      .then((res) => res.json())
-      .then((data) => setRequest(data))
+      .then(res => res.json())
+      .then(data => setRequest(data))
+
+    fetch(`http://localhost:8088/request_systems?requestId=${requestId}&_expand=system`)
+      .then(res => res.json())
+      .then(data => setSystems(data))
   }, [requestId])
 
   const handleUpdate = () => {
@@ -18,17 +23,13 @@ export const RequestDetail = () => {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: "submitted" })
-    }).then(() => {
-      navigate("/requests")
-    })
+    }).then(() => navigate("/requests"))
   }
 
   const handleDelete = () => {
     fetch(`http://localhost:8088/requests/${requestId}`, {
       method: "DELETE"
-    }).then(() => {
-      navigate("/requests")
-    })
+    }).then(() => navigate("/requests"))
   }
 
   return (
@@ -41,6 +42,15 @@ export const RequestDetail = () => {
           <p><strong>Range:</strong> {request.range?.name}</p>
           <p><strong>Date:</strong> {request.primary_date}</p>
           <p><strong>Status:</strong> {request.status}</p>
+
+          <h3>Test Systems</h3>
+          <ul>
+            {systems.length > 0 ? (
+              systems.map(s => <li key={s.id}>{s.system?.name}</li>)
+            ) : (
+              <li>No systems selected</li>
+            )}
+          </ul>
 
           <div className="request-actions">
             <button onClick={handleUpdate}>Mark as Submitted</button>
