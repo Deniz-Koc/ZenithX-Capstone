@@ -12,7 +12,6 @@
   font-size: 2rem;
 }
 
-
 .log-container input {
   display: block;
   width: 250px;
@@ -20,9 +19,26 @@
   margin: 0.5rem auto;
 }
 
+/* Login sayfası butonları */
+.log-form button {
+  width: 100%;
+  padding: 10px;
+  background-color: #213547;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
 
+.log-form button:hover {
+  background-color: #162233;
+}
+
+/* Logout sayfası butonu */
 .log-btn {
-  width: 250px;
+  max-width: 200px;  /* büyük ekranda 200px */
+  width: 100%;       /* küçük ekranda genişlesin */
   padding: 0.7rem;
   margin-top: 1rem;
   background-color: #213547;
@@ -36,22 +52,4 @@
 
 .log-btn:hover {
   background-color: #1a2e3f;
-}
-
-
-.log-form button,
-.log-container button {
-  width: 100%;
-  padding: 10px;
-  background-color: #213547;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  margin-top: 10px;
-}
-
-.log-form button:hover,
-.log-container button:hover {
-  background-color: #162233;
 }

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import { getRanges } from "../services/rangesService.jsx"
-import "./Catalog.css" 
+import "../customer/Catalog.css"
 
 export const RangesCatalog = () => {
   const [ranges, setRanges] = useState([])
@@ -12,27 +12,16 @@ export const RangesCatalog = () => {
   return (
     <div className="catalog-container">
       <h1>Test Ranges Catalog</h1>
-
-      <table className="catalog-table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Max Altitude (ft)</th>
-            <th>Description</th>
-          </tr>
-        </thead>
-        <tbody>
-          {ranges.map((r) => (
-            <tr key={r.id}>
-              <td>{r.name}</td>
-              <td>{r.location}</td>
-              <td>{r.max_altitude}</td>
-              <td>{r.description}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="catalog-cards">
+        {ranges.map((r) => (
+          <div key={r.id} className="catalog-card">
+            <p><span>Name:</span> {r.name}</p>
+            <p><span>Location:</span> {r.location}</p>
+            <p><span>Max Altitude:</span> {r.max_altitude} ft</p>
+            <p><span>Description:</span> {r.description}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

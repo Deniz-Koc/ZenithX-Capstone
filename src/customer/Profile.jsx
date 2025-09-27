@@ -18,29 +18,22 @@ export const Profile = () => {
   }
 
   return (
-    <div className="profile-container">
-      <h1>My Profile</h1>
-      <table>
-        <tbody>
-          <tr>
-            <th>Name</th>
-            <td>{user.name}</td>
-          </tr>
-          <tr>
-            <th>Email</th>
-            <td>{user.email}</td>
-          </tr>
-          <tr>
-            <th>Company</th>
-            <td>{user.company}</td>
-          </tr>
-          <tr>
-            <th>Role</th>
-            <td>{user.role}</td>
-          </tr>
-        </tbody>
-      </table>
-      <button>Edit Profile</button>
+    <div className="profile-page">
+      <h1 className="profile-header">My Profile</h1>
+      
+      <div className="profile-card">
+        <p><strong>Name:</strong> {user.name}</p>
+        <p><strong>Email:</strong> {user.email}</p>
+        <p><strong>Company:</strong> {user.company}</p>
+        <p><strong>Role:</strong> {user.role}</p>
+      </div>
+
+      <button 
+        className="edit-btn" 
+        onClick={() => alert("Profile editing coming soon!")}
+      >
+        Edit Profile
+      </button>
     </div>
   )
 }

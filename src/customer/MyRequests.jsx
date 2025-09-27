@@ -15,46 +15,32 @@ export const MyRequests = () => {
 
   return (
     <div className="requests-page">
-      <h1>My Test Requests</h1>
-
-      <div className="new-request-btn">
-        <Link to="/requests/new">New Test Request</Link>
+      
+      {/* Başlık ve butonu aynı satıra alıyoruz */}
+      <div className="requests-header">
+        <h1>My Test Requests</h1>
+        <Link to="/requests/new" className="new-request-link">
+          New Test Request
+        </Link>
       </div>
 
-      <table>
-        <thead>
-          <tr>
-            <th>Request ID</th>
-            <th>User</th>
-            <th>Range</th>
-            <th>Primary Date</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {requests.length > 0 ? (
-            requests.map(r => (
-              <tr key={r.id}>
-                <td>{r.id}</td>
-                <td>{r.user?.name}</td>
-                <td>{r.range?.name}</td>
-                <td>{r.primary_date}</td>
-                <td>{r.status}</td>
-                <td>
-                  <Link to={`/requests/${r.id}`}>View</Link>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan="6" style={{ textAlign: "center" }}>
-                No requests found.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      {/* Kartlar */}
+      <div className="requests-grid">
+        {requests.length > 0 ? (
+          requests.map(r => (
+            <div key={r.id} className="request-card">
+              <p><strong>ID:</strong> {r.id}</p>
+              <p><strong>User:</strong> {r.user?.name}</p>
+              <p><strong>Range:</strong> {r.range?.name}</p>
+              <p><strong>Date:</strong> {r.primary_date}</p>
+              <p><strong>Status:</strong> {r.status}</p>
+              <Link to={`/requests/${r.id}`} className="view-btn">View</Link>
+            </div>
+          ))
+        ) : (
+          <p>No requests found.</p>
+        )}
+      </div>
     </div>
   )
 }
