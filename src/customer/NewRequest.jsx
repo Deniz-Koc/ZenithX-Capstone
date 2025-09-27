@@ -9,15 +9,20 @@ export const NewRequest = () => {
   const [date, setDate] = useState("")
   const [rangeId, setRangeId] = useState("")
   const [selectedSystems, setSelectedSystems] = useState([])
+  const [error, setError] = useState("")
 
   const localUser = JSON.parse(localStorage.getItem("zenithx_user"))
 
   useEffect(() => {
-    getRanges().then(data => setRanges(data))
+    getRanges()
+      .then(setRanges)
+      .catch(() => setError("Failed to load test ranges."))
   }, [])
 
   useEffect(() => {
-    getSystems().then(data => setSystems(data))
+    getSystems()
+      .then(setSystems)
+      .catch(() => setError("Failed to load test systems."))
   }, [])
 
   const handleSystemChange = (e) => {
@@ -33,9 +38,23 @@ export const NewRequest = () => {
     e.preventDefault()
 
     if (!localUser) {
-      alert("You must be logged in!")
+      setError("You must be logged in.")
       return
     }
+    if (!rangeId) {
+      setError("Please select a test range.")
+      return
+    }
+    if (!date) {
+      setError("Please choose a primary date.")
+      return
+    }
+    if (selectedSystems.length === 0) {
+      setError("Please select at least one system.")
+      return
+    }
+
+    setError("") // temizle
 
     const newRequest = {
       userId: parseInt(localUser.id),
@@ -49,7 +68,10 @@ export const NewRequest = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newRequest)
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to create request")
+        return res.json()
+      })
       .then(created => {
         selectedSystems.forEach(sysId => {
           fetch("http://localhost:8088/request_systems", {
@@ -61,14 +83,18 @@ export const NewRequest = () => {
             })
           })
         })
-        alert("New request created!")
+        alert("New request created successfully!")
       })
+      .catch(() => setError("Error saving request. Please try again."))
   }
 
   return (
     <div className="new-request-page">
       <div className="new-request-container">
         <h1>New Test Request (Customer)</h1>
+
+        {error && <p style={{ color: "red" }}>{error}</p>}
+
         <form onSubmit={handleSave} className="new-request-form">
           <div className="form-row">
             <label>Test Range:</label>

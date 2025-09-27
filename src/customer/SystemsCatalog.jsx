@@ -12,26 +12,16 @@ export const SystemsCatalog = () => {
   return (
     <div className="catalog-container">
       <h1>Test Systems Catalog</h1>
-      <table className="catalog-table">
-        <thead>
-          <tr>
-            <th>Code</th>
-            <th>Name</th>
-            <th>Type</th>
-            <th>Specifications</th>
-          </tr>
-        </thead>
-        <tbody>
-          {systems.map((s) => (
-            <tr key={s.id}>
-              <td>{s.code}</td>
-              <td>{s.name}</td>
-              <td>{s.type}</td>
-              <td>{s.key_specs}</td> 
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div className="catalog-cards">
+        {systems.map((s) => (
+          <div key={s.id} className="catalog-card">
+            <p><span>Code:</span> {s.code}</p>
+            <p><span>Name:</span> {s.name}</p>
+            <p><span>Type:</span> {s.type}</p>
+            <p><span>Specifications:</span> {s.key_specs}</p>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

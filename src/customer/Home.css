@@ -5,6 +5,9 @@
   justify-content: center;
   min-height: 80vh;
   text-align: center;
+  padding: 20px;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 .home-container h1 {
@@ -15,10 +18,34 @@
 
 .home-container img {
   width: 300px;
+  max-width: 90%;
   margin: 20px 0;
 }
 
 .home-container p {
   font-size: 1.2rem;
   color: #555;
+  line-height: 1.4;
+}
+
+
+/* Mobil uyum */
+@media (max-width: 768px) {
+  .home-container h1 {
+    font-size: 1.6rem;
+  }
+
+  .home-container p {
+    font-size: 1rem;
+    max-width: 90%;        /* mobilde satır kayabilir */
+    word-wrap: break-word;
+  }
+}
+
+/* Masaüstü için */
+@media (min-width: 769px) {
+  .home-container p {
+    max-width: 100%;       /* masaüstünde tek satırda kalsın */
+    white-space: nowrap;   /* satır kırılmasın */
+  }
 }

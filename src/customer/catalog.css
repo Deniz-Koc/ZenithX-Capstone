@@ -5,6 +5,7 @@
   align-items: center;
   min-height: 80vh;
   text-align: center;
+  padding: 10px;
 }
 
 .catalog-container h1 {
@@ -12,19 +13,29 @@
   margin-bottom: 1.5rem;
 }
 
-.catalog-table {
-  border-collapse: collapse;
-  width: 80%;
+.catalog-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  width: 100%;
+  max-width: 1000px;
 }
 
-.catalog-table th,
-.catalog-table td {
+.catalog-card {
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: center;
+  border-radius: 8px;
+  padding: 15px;
+  background: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  text-align: left;
 }
 
-.catalog-table th {
-  background-color: #f5f5f5;
+.catalog-card p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
+.catalog-card span {
   font-weight: bold;
+  color: #333;
 }

@@ -10,12 +10,20 @@ export const RequestDetail = () => {
 
   useEffect(() => {
     fetch(`http://localhost:8088/requests/${requestId}?_expand=user&_expand=range`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load request")
+        return res.json()
+      })
       .then(data => setRequest(data))
+      .catch(() => alert("Error loading request details"))
 
     fetch(`http://localhost:8088/request_systems?requestId=${requestId}&_expand=system`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Failed to load systems")
+        return res.json()
+      })
       .then(data => setSystems(data))
+      .catch(() => alert("Error loading systems"))
   }, [requestId])
 
   const handleUpdate = () => {
@@ -23,25 +31,35 @@ export const RequestDetail = () => {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ status: "submitted" })
-    }).then(() => navigate("/requests"))
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Update failed")
+        navigate("/requests")
+      })
+      .catch(() => alert("Error updating request"))
   }
 
   const handleDelete = () => {
     fetch(`http://localhost:8088/requests/${requestId}`, {
       method: "DELETE"
-    }).then(() => navigate("/requests"))
+    })
+      .then(res => {
+        if (!res.ok) throw new Error("Delete failed")
+        navigate("/requests")
+      })
+      .catch(() => alert("Error deleting request"))
   }
 
   return (
     <div className="request-detail">
-      {request && (
-        <>
+      {request ? (
+        <div className="request-card">
           <h1>Request Detail</h1>
-          <p><strong>ID:</strong> {request.id}</p>
-          <p><strong>User:</strong> {request.user?.name}</p>
-          <p><strong>Range:</strong> {request.range?.name}</p>
-          <p><strong>Date:</strong> {request.primary_date}</p>
-          <p><strong>Status:</strong> {request.status}</p>
+          <p><span>ID:</span> {request.id}</p>
+          <p><span>User:</span> {request.user?.name}</p>
+          <p><span>Range:</span> {request.range?.name}</p>
+          <p><span>Date:</span> {request.primary_date}</p>
+          <p><span>Status:</span> {request.status}</p>
 
           <h3>Test Systems</h3>
           <ul>
@@ -57,7 +75,9 @@ export const RequestDetail = () => {
             <button onClick={handleDelete}>Delete</button>
             <button onClick={() => navigate("/requests")}>Back</button>
           </div>
-        </>
+        </div>
+      ) : (
+        <p>Loading request details...</p>
       )}
     </div>
   )
