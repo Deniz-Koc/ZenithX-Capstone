@@ -82,7 +82,12 @@
   cursor: pointer;
 }
 
+.save-btn:hover {
+  background: #162233;
+}
 
+
+/* 📱 Mobil uyumluluk */
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
@@ -107,13 +112,22 @@
 
   .form-row {
     flex-direction: column;
-    align-items: stretch;
+    align-items: flex-start;
+    margin-bottom: 15px;
   }
 
   .form-row label {
-    width: 100%;
+    background: none;   /* gri kutu kalktı */
+    padding: 0;
+    margin: 0 0 5px 0;
     text-align: left;
-    margin-bottom: 5px;
+    flex: unset;
+    font-weight: bold;
+  }
+
+  .form-row select,
+  .form-row input {
+    width: 100%;
   }
 
   .systems-options {

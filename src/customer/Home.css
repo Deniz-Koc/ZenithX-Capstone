@@ -29,7 +29,7 @@
 }
 
 
-/* Mobil uyum */
+/* Mobil*/
 @media (max-width: 768px) {
   .home-container h1 {
     font-size: 1.6rem;
@@ -37,15 +37,15 @@
 
   .home-container p {
     font-size: 1rem;
-    max-width: 90%;        /* mobilde satır kayabilir */
+    max-width: 90%;  
     word-wrap: break-word;
   }
 }
 
-/* Masaüstü için */
+/* Desktop */
 @media (min-width: 769px) {
   .home-container p {
-    max-width: 100%;       /* masaüstünde tek satırda kalsın */
-    white-space: nowrap;   /* satır kırılmasın */
+    max-width: 100%;  
+    white-space: nowrap;
   }
 }
