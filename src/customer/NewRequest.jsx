@@ -54,7 +54,7 @@ export const NewRequest = () => {
       return
     }
 
-    setError("") // temizle
+    setError("")
 
     const newRequest = {
       userId: parseInt(localUser.id),
@@ -132,6 +132,13 @@ export const NewRequest = () => {
           </div>
 
           <div className="form-actions">
+            <button
+              type="button"
+              className="cancel-btn"
+              onClick={() => window.history.back()}
+            >
+              Cancel
+            </button>
             <button type="submit" className="save-btn">Save</button>
           </div>
         </form>
